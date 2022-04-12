@@ -2,10 +2,10 @@
 #include <math.h>
 #include <vector>
 #include <algorithm>
-#include <memory>
 
 using namespace std;
 
+// class data type for center point
 class Point {
     public:
         double x;
@@ -31,6 +31,9 @@ class TwoDShape {
         double compute_distance(const TwoDShape &shape) {
             return sqrt(pow(center_point.x - shape.center_point.x, 2) + pow(center_point.y - shape.center_point.y, 2));
         }
+        //virtual function so derived functions will be called instead
+        //print out random stuff to debug
+        //if this is printed out, smt is wrong
         virtual double perimeter(){
             cout << "based" << endl;
             return 0.00;
@@ -118,9 +121,16 @@ void print_perti_desc (vector<TwoDShape*> vect) {
     cout << endl;
 }
 
-int main () {
-    vector<TwoDShape *> vect;
+// for demonstration: object slicing
+void compute_total_area (vector<TwoDShape> vect) {
+    double area;
+    for (TwoDShape shape : vect) {
+        area += shape.area();
+    }
+    cout << "The total area of all shapes in the vector is: " << area << endl;
+}
 
+int main () {
     Circle circle = Circle(Point(1,2), 3);
     TwoDShape *ptr1 = &circle;
 
@@ -130,11 +140,30 @@ int main () {
     Square square = Square(Point(5,6), 4);
     TwoDShape *ptr3 = &square;
 
+    //create vector of based class pointer
+    vector<TwoDShape *> vect;
     vect.push_back(ptr1);
     vect.push_back(ptr2);
     vect.push_back(ptr3);
 
     print_perti_desc(vect);
     compute_total_area(vect);
+
+    //test individual derived class functions
+    cout << rectangle.area() << endl;
+    cout << rectangle.perimeter() << endl;
+
+    //create vector of based class
+    //this code block is to show case object slicing
+    // NOT THE SOLUTION
+    vector<TwoDShape> based_vect;
+    Circle circle = Circle(Point(1,2), 3);
+    Rectangle rectangle = Rectangle(Point(3,4), 5, 6);
+    Square square = Square(Point(5,6), 4);
+    based_vect.push_back(circle);
+    based_vect.push_back(rectangle);
+    based_vect.push_back(square);
+    compute_total_area(based_vect);
+
     return 0;
 }
