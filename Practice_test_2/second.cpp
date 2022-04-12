@@ -28,6 +28,9 @@ class Complex {
             imagine = complex_obj.imagine;
             real = complex_obj.real;
         }
+
+        //extra function to show result easier
+        //print in format: real +/- imagine i (example: 6 - 9i)
         void print_complex() {
             cout << noshowpos << this->real;
             cout << showpos << this->imagine << "i" << endl;
@@ -37,14 +40,21 @@ class Complex {
 int main () {
     Complex n1 = Complex(3,-2);
     Complex n2 = Complex(6,9);
-    Complex n3 = Complex(n2);
 
+    //initialized new object with copy constructor
+    Complex n3 = Complex(n2);
+    //print n3 to check result
+    n3.print_complex();
+
+    //example for operator +
     Complex sum = n1+n2;
     sum.print_complex();
 
+    //example for operator =
     Complex n4 = n1;
     n4.print_complex();
 
+    //example for operator ==
     bool equal = n2==n3;
     cout << equal << endl; 
 
