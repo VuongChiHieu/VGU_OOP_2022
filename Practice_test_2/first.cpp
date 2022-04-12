@@ -61,4 +61,6 @@ int main () {
     Manager two = Manager(2, "Vinh", "male", 1);
     one.print_info();
     two.print_info();
+    
+    return 0;
 }
